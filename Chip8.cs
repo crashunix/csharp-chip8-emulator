@@ -19,12 +19,13 @@ public class Chip8
 
   public bool[] Keys { get; } = new bool[16];
   public bool[,] Display { get; } = new bool[DISPLAY_WIDTH, DISPLAY_HEIGHT];
-  public IRenderer _renderer { get; private set; }
 
   public bool IsPaused { get; private set; } = false;
   public bool DrawFlag { get; private set; } = false;
 
   private bool _waitingForKeyPress = false;
+
+  private readonly IRenderer _renderer;
 
   public Chip8(IRenderer renderer)
   {
@@ -371,36 +372,33 @@ public class Chip8
     }
   }
 
-  private void Cycle()
+  public void ResetKeys()
+  {
+    Array.Clear(Keys, 0, Keys.Length);
+  }
+
+  public void Cycle()
   {
     if (!IsPaused && !_waitingForKeyPress)
     {
       ushort opcode = (ushort)((Memory[PC] << 8) | Memory[PC + 1]);
       InterpretsInstruction(opcode);
-      UpdateTimers();
+    }
+  }
+
+  public void Tick60Hz()
+  {
+    UpdateTimers();
+
+    if (DrawFlag)
+    {
+      _renderer.DrawChip8Screen(Display);
+      DrawFlag = false;
     }
   }
 
   public void Start(byte[] program)
   {
     LoadProgram(program);
-
-    while (true)
-    {
-      Cycle();
-
-      // Renderiza o display se necessário
-      // É importante que a lógica de renderização esteja aqui para interagir com o ambiente
-      if (DrawFlag)
-      {
-        // Aqui você chamaria seu método de renderização da classe externa
-        _renderer.DrawChip8Screen(Display);
-        DrawFlag = false;
-      }
-
-      // Atraso para controlar a taxa de emulação
-      // Este valor pode ser ajustado para simular diferentes velocidades
-      Thread.Sleep(1);
-    }
   }
 }
