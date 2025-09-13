@@ -1,4 +1,7 @@
 public interface IRenderer
 {
-  void DrawChip8Screen(bool[,] screen);
+  void Clear();
+  bool GetPixel(int x, int y);
+  void FlipPixel(int x, int y);
+  void RenderFrame();
 }

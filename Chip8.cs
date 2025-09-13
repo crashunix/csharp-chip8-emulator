@@ -18,7 +18,7 @@ public class Chip8
   public byte SoundTimer { get; private set; } = 0;
 
   public bool[] Keys { get; } = new bool[16];
-  public bool[,] Display { get; } = new bool[DISPLAY_WIDTH, DISPLAY_HEIGHT];
+  public IRenderer Renderer { get; }
 
   public bool IsPaused { get; private set; } = false;
   public bool DrawFlag { get; private set; } = false;
@@ -41,7 +41,7 @@ public class Chip8
         switch (opcode & 0x00FF)
         {
           case 0x00E0: // CLS
-            Array.Clear(Display, 0, Display.Length);
+            _renderer.Clear();
             DrawFlag = true;
             PC += 2;
             break;
@@ -199,11 +199,11 @@ public class Chip8
                 int pixelX = (Vx + x) % DISPLAY_WIDTH;
                 int pixelY = (Vy + y) % DISPLAY_HEIGHT;
 
-                if (Display[pixelX, pixelY])
+                if (_renderer.GetPixel(pixelX, pixelY))
                 {
                   V[0xF] = 1;
                 }
-                Display[pixelX, pixelY] ^= true;
+                _renderer.FlipPixel(pixelX, pixelY);
               }
             }
           }
@@ -352,7 +352,8 @@ public class Chip8
     Array.Clear(V, 0, V.Length);
     Array.Clear(Stack, 0, Stack.Length);
     Array.Clear(Keys, 0, Keys.Length);
-    Array.Clear(Display, 0, Display.Length);
+    // Array.Clear(Display, 0, Display.Length);
+    _renderer.Clear();
     I = 0;
     PC = 0x200;
     SP = 0;
@@ -392,7 +393,7 @@ public class Chip8
 
     if (DrawFlag)
     {
-      _renderer.DrawChip8Screen(Display);
+      _renderer.RenderFrame();
       DrawFlag = false;
     }
   }

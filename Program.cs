@@ -1,5 +1,5 @@
 ﻿
-// 1. Injeção de Dependência: Criamos o renderer e o injetamos no Chip8.
+// Injetar o renderer padrão (por enquanto é o ConsoleRenderer, to fazendo um com Veldrid kkkk)
 IRenderer renderer = new ConsoleRenderer();
 var chip8 = new Chip8(renderer);
 
@@ -38,12 +38,12 @@ while (true)
     }
   }
 
-  for (int i = 0; i < 20; i++) // Executa 10 ciclos da CPU por quadro (aprox. 600Hz)
+  for (int i = 0; i < 20; i++) // Executa 20 ciclos da CPU por quadro (aprox. 1200 Hz)
   {
     chip8.Cycle();
   }
-  // 3. Executa um ciclo da CPU e da renderização (agora dentro do Tick).
+  // Executa um ciclo de CPU
   chip8.Tick60Hz();
-  // 4. Controla a velocidade da emulação.
+  // Controla a velocidade da emulação.
   Thread.Sleep(16);
 }
