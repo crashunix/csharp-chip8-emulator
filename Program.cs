@@ -44,7 +44,6 @@ while (true)
   }
   // 3. Executa um ciclo da CPU e da renderização (agora dentro do Tick).
   chip8.Tick60Hz();
-
   // 4. Controla a velocidade da emulação.
   Thread.Sleep(16);
 }
