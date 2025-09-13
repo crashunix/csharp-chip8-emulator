@@ -1,7 +1,7 @@
 public interface IRenderer
 {
-  ushort Width => 64;
-  ushort Height => 32;
+  static ushort Width => 64;
+  static ushort Height => 32;
 
   void Clear();
   bool GetPixel(int x, int y);

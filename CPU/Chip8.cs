@@ -191,8 +191,8 @@ public class Chip8
             {
               if ((pixel & (0x80 >> x)) != 0)
               {
-                int pixelX = (Vx + x) % Renderer.Width;
-                int pixelY = (Vy + y) % Renderer.Height;
+                int pixelX = (Vx + x) % IRenderer.Width;
+                int pixelY = (Vy + y) % IRenderer.Height;
 
                 if (Renderer.GetPixel(pixelX, pixelY))
                 {
