@@ -4,9 +4,6 @@ public class Chip8
 {
   public const int MEMORY_SIZE = 4096;
   public const int REGISTER_COUNT = 16;
-  public const int DISPLAY_WIDTH = 64;
-  public const int DISPLAY_HEIGHT = 32;
-
   public byte[] Memory { get; } = new byte[MEMORY_SIZE];
   public byte[] V { get; } = new byte[REGISTER_COUNT];
   public ushort I { get; private set; } = 0;
@@ -194,8 +191,8 @@ public class Chip8
             {
               if ((pixel & (0x80 >> x)) != 0)
               {
-                int pixelX = (Vx + x) % DISPLAY_WIDTH;
-                int pixelY = (Vy + y) % DISPLAY_HEIGHT;
+                int pixelX = (Vx + x) % Renderer.Width;
+                int pixelY = (Vy + y) % Renderer.Height;
 
                 if (Renderer.GetPixel(pixelX, pixelY))
                 {
