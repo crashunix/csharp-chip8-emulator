@@ -12,11 +12,13 @@ var keyMap = new Dictionary<ConsoleKey, int>
     { ConsoleKey.Z, 0xA }, { ConsoleKey.X, 0x0 }, { ConsoleKey.C, 0xB }, { ConsoleKey.V, 0xF }
 };
 
-var programName = args.Length > 0 ? args[0] : "test_opcode";
+ICartridge cartridge = new FileSystemCartridge();
 
-// Carrega a ROM
-byte[] programData = File.ReadAllBytes($"roms/{programName}.ch8");
-chip8.Start(programData);
+// Flash da ROM no cartucho
+cartridge.Flash(args.Length > 0 ? args[0] : "test_opcode");
+
+// Carrega a ROM na CPU
+chip8.Start(cartridge.Dump());
 
 Console.WriteLine("Controles:");
 Console.WriteLine("1 2 3 4 | Q W E R");

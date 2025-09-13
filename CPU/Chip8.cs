@@ -25,11 +25,9 @@ public class Chip8
 
   private bool _waitingForKeyPress = false;
 
-  private readonly IRenderer _renderer;
-
   public Chip8(IRenderer renderer)
   {
-    _renderer = renderer;
+    Renderer = renderer;
     Reset();
   }
 
@@ -41,7 +39,7 @@ public class Chip8
         switch (opcode & 0x00FF)
         {
           case 0x00E0: // CLS
-            _renderer.Clear();
+            Renderer.Clear();
             DrawFlag = true;
             PC += 2;
             break;
@@ -199,11 +197,11 @@ public class Chip8
                 int pixelX = (Vx + x) % DISPLAY_WIDTH;
                 int pixelY = (Vy + y) % DISPLAY_HEIGHT;
 
-                if (_renderer.GetPixel(pixelX, pixelY))
+                if (Renderer.GetPixel(pixelX, pixelY))
                 {
                   V[0xF] = 1;
                 }
-                _renderer.FlipPixel(pixelX, pixelY);
+                Renderer.FlipPixel(pixelX, pixelY);
               }
             }
           }
@@ -353,7 +351,7 @@ public class Chip8
     Array.Clear(Stack, 0, Stack.Length);
     Array.Clear(Keys, 0, Keys.Length);
     // Array.Clear(Display, 0, Display.Length);
-    _renderer.Clear();
+    Renderer.Clear();
     I = 0;
     PC = 0x200;
     SP = 0;
@@ -393,7 +391,7 @@ public class Chip8
 
     if (DrawFlag)
     {
-      _renderer.RenderFrame();
+      Renderer.RenderFrame();
       DrawFlag = false;
     }
   }
