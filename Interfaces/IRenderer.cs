@@ -1,4 +1,6 @@
-public interface IRenderer
+using System;
+
+public interface IRenderer : IDisposable
 {
   static ushort Width => 64;
   static ushort Height => 32;

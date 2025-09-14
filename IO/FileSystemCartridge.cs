@@ -11,11 +11,13 @@ public class FileSystemCartridge : ICartridge
     }
 
     var programName = path;
-    var programPath = $"Roms/{programName}.ch8";
+    var programPath = $"./Roms/{programName}.ch8";
+
+    Console.WriteLine($"Flashing ROM from path: {programPath}");
 
     if (!File.Exists(programPath))
     {
-      throw new FileNotFoundException($"ROM file not found: {path}");
+      throw new FileNotFoundException($"ROM file not found: {programPath}");
     }
 
     // Carrega a ROM
