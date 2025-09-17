@@ -17,7 +17,7 @@ ICartridge cartridge = new FileSystemCartridge();
 try
 {
     // Flash da ROM no cartucho
-    cartridge.Flash(args.Length > 0 ? args[0] : "ibm");
+    cartridge.Flash(args.Length > 0 ? args[0] : "crashunix");
 
     // Carrega a ROM na CPU
     chip8.Start(cartridge.Dump());

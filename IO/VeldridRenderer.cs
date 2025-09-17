@@ -52,7 +52,7 @@ layout(location = 0) out vec4 fsout_Color; // A cor final do fragmento
 // Isso simula a curvatura de uma tela CRT.
 vec2 distort(vec2 p)
 {
-    float barrel_distortion = 0.15; // Intensidade da distorção
+    float barrel_distortion = 0.075; // Intensidade da distorção
     float r2 = (p.x * p.x + p.y * p.y); // Quadrado da distância do centro
     p *= (1.0 + barrel_distortion * r2); // Aplica a distorção
     return p;
@@ -65,7 +65,9 @@ void main()
     // e depois de volta para [0,1] para amostragem da textura.
     vec2 distorted_uv = distort(fsin_TexCoords * 2.0 - 1.0) * 0.5 + 0.5;
 
-    vec4 color = vec4(0.0, 0.0, 0.0, 1.0); // Cor padrão preta
+    // Define a cor do bezel (borda) do monitor
+    vec4 bezelColor = vec4(0.0, 0.0, 0.0, 1.0);
+    vec4 color = bezelColor;
 
     // Garante que as coordenadas distorcidas estejam dentro dos limites válidos [0,1].
     // Isso evita amostragem fora da textura e artefatos nas bordas.
@@ -73,12 +75,11 @@ void main()
     {
         // Amostra a cor da textura da tela do CHIP-8 usando as coordenadas distorcidas.
         color = texture(sampler2D(SourceTexture, SourceSampler), distorted_uv);
+        
+        // Aplica o efeito de scanlines (linhas de varredura) apenas na área da tela.
+        float scanline = sin(fsin_TexCoords.y * 400.0) * 0.1; // 400.0 controla a frequência, 0.1 a intensidade
+        color.rgb -= scanline; // Escurece a cor RGB com base na scanline
     }
-
-    // Aplica o efeito de scanlines (linhas de varredura).
-    // Um seno é usado para criar um padrão de escurecimento periódico.
-    float scanline = sin(fsin_TexCoords.y * 400.0) * 0.1; // 400.0 controla a frequência, 0.1 a intensidade
-    color.rgb -= scanline; // Escurece a cor RGB com base na scanline
 
     fsout_Color = color; // Define a cor final do pixel
 }";
@@ -135,9 +136,13 @@ void main()
             // Inicializa a matriz de pixels da tela do CHIP-8.
             _pixels = new bool[IRenderer.Width, IRenderer.Height];
             // Cria e configura a janela SDL2.
-            _window = new Sdl2Window("CHIP-8 Emulator", 100, 100, IRenderer.Width * 10, IRenderer.Height * 10, SDL_WindowFlags.OpenGL, true);
+            _window = new Sdl2Window("CHIP-8 Emulator", 100, 100, IRenderer.Width * 10, IRenderer.Height * 10, SDL_WindowFlags.OpenGL | SDL_WindowFlags.Resizable, true);
             // Cria o dispositivo gráfico Veldrid.
             _graphicsDevice = VeldridStartup.CreateGraphicsDevice(_window);
+            _window.Resized += () => 
+            {
+                _graphicsDevice.ResizeMainWindow((uint)_window.Width, (uint)_window.Height);
+            };
             
             // Obtém a fábrica de recursos do dispositivo gráfico.
             ResourceFactory factory = _graphicsDevice.ResourceFactory;
