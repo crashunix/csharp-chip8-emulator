@@ -23,7 +23,7 @@ class Program
         {
             // 2. Carregar a ROM
             Console.WriteLine("Initializing CHIP-8 Emulator (Console Mode)...");
-            cartridge.Flash(args.Length > 0 ? args[0] : "br8kout");
+            cartridge.Flash(args.Length > 0 ? args[0] : "ibm");
             cpu.Start(cartridge.Dump());
 
             // 3. Montar e executar o Oscillator, que agora contém o loop principal

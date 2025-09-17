@@ -17,7 +17,7 @@ public class FileSystemCartridge : ICartridge
     }
 
     var programName = path;
-    var programPath = $"./Roms/{programName}.ch8";
+    var programPath = $"../../roms/{programName}.ch8";
 
     Console.WriteLine($"Flashing ROM from path: {programPath}");
 

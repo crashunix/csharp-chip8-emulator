@@ -1,20 +1,30 @@
-
 {
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Core Launch (Veldrid GUI)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net9.0/chip8-emulator.dll",
+            "program": "${workspaceFolder}/src/Chip8.VeldridGui/bin/Debug/net9.0/Chip8.VeldridGui.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src/Chip8.VeldridGui",
             "console": "internalConsole",
             "stopAtEntry": false,
             "env": {
                 "SDL_VIDEODRIVER": "x11"
             }
+        },
+        {
+            "name": ".NET Core Launch (Console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Chip8.Console/bin/Debug/net9.0/Chip8.Console.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Chip8.Console",
+            "console": "internalConsole",
+            "stopAtEntry": false
         }
     ]
 }
