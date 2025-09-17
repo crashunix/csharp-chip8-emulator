@@ -1,3 +1,9 @@
+namespace Chip8.Infrastructure.IO;
+
+using Chip8.Core.Interfaces;
+using System;
+using System.IO;
+
 public class FileSystemCartridge : ICartridge
 {
   private byte[] _rom = [];

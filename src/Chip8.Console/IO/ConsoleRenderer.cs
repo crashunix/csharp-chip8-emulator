@@ -1,4 +1,7 @@
-using chip8_emulator.Interfaces;
+namespace Chip8.Console.IO;
+
+using Chip8.Core.CPU;
+using Chip8.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -62,6 +65,6 @@ public class ConsoleRenderer : IRenderer, IInputProvider
 
   public void Dispose()
   {
-    // Nothing to dispose for the console renderer
+    // nada para fazer aqui papai
   }
 }

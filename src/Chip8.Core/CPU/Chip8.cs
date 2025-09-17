@@ -1,4 +1,7 @@
+namespace Chip8.Core.CPU;
+
 using System;
+using Chip8.Core.Interfaces;
 
 public class Chip8
 {
