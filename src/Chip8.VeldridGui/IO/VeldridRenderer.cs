@@ -136,9 +136,9 @@ void main()
         // Inicializa a matriz de pixels da tela do CHIP-8.
         _pixels = new bool[IRenderer.Width, IRenderer.Height];
         // Cria e configura a janela SDL2.
-        _window = new Sdl2Window("CHIP-8 Emulator", 100, 100, IRenderer.Width * 10, IRenderer.Height * 10, SDL_WindowFlags.OpenGL | SDL_WindowFlags.Resizable, true);
+        _window = new Sdl2Window("CHIP-8 Emulator", 100, 100, IRenderer.Width * 10, IRenderer.Height * 10, SDL_WindowFlags.OpenGL | SDL_WindowFlags.Resizable, false);
         // Cria o dispositivo gráfico Veldrid.
-        _graphicsDevice = VeldridStartup.CreateGraphicsDevice(_window);
+        _graphicsDevice = VeldridStartup.CreateGraphicsDevice(_window, new GraphicsDeviceOptions(), GraphicsBackend.OpenGL);
         _window.Resized += () => 
         {
             _graphicsDevice.ResizeMainWindow((uint)_window.Width, (uint)_window.Height);
