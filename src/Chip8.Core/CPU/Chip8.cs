@@ -352,7 +352,7 @@ public class Chip8
     Array.Clear(Stack, 0, Stack.Length);
     Array.Clear(Keys, 0, Keys.Length);
     // Array.Clear(Display, 0, Display.Length);
-    Renderer.Clear();
+    // Renderer.Clear();
     I = 0;
     PC = 0x200;
     SP = 0;
