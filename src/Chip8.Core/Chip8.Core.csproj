@@ -4,6 +4,22 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Settings -->
+    <PackageId>Crashunix.Chip8.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>crashunix</Authors>
+    <Company>crashunix</Company>
+    <Description>A simple Chip-8 emulator core library, designed to be used in various .NET projects.</Description>
+    <RepositoryUrl>https://github.com/crashunix/chip8-emulator</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/crashunix/chip8-emulator</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>
