@@ -1,4 +1,4 @@
-
+using System;
 using Chip8.Core.Interfaces;
 
 namespace Chip8.Core.CPU;
@@ -389,6 +389,11 @@ public class Chip8
   public void Tick60Hz()
   {
     UpdateTimers();
+
+    if (SoundTimer > 0)
+    {
+      Console.Beep();
+    }
 
     if (DrawFlag)
     {
